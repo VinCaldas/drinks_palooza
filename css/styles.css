@@ -2,13 +2,24 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'DM Sans', sans-serif
+    font-family: 'DM Sans', sans-serif;
 }
 
 body {
     height: 100vh;
     background-color: #373335;
 }
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+}
+
+@font-face {
+    font-family: DancingScript;
+    src: url('../assets/fonts/DancingScript-Regular.ttf');
+ }
 
 .scroll-container{
     height: 100vh;
@@ -20,10 +31,8 @@ body {
 #home, #appointment-page{
     height: 100vh;
     display: flex;
-    flex-direction: row;
     animation: fade 1.5s;
     scroll-snap-align: center;
-    scroll-snap-stop: always;
 }
 
 #appointment-page{
@@ -51,12 +60,6 @@ body {
     text-shadow: 2px 2px black;
 }
 
-@keyframes fade {
-    from {
-        opacity: 0;
-    }
-}
-
 .left-side h3 {
     white-space: nowrap;
     overflow: hidden;
@@ -64,11 +67,16 @@ body {
     text-shadow: 2px 2px black;
 }
 
-
 .logo{
-    width: 350px;
-    height: 150px;
-    margin-block: 40px;
+    font-family: 'DancingScript', cursive;
+    color: #F8676B;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    font-size: 80px;
+    margin-top: 100px;
+    pointer-events: none;
+    user-select: none;
+    margin-bottom: 98px;
 }
 
 @keyframes PositionImageAnimation {
@@ -82,11 +90,9 @@ body {
     min-width: 50%;
     min-height: 100%;
     display: flex;
-    flex-shrink: 0;
-        background-image: 
-        linear-gradient(90deg, #373335, rgba(73, 252, 67, 0.115)),
-        /* linear-gradient(to bottom, #373335, rgba(73, 247, 67, 0.243)), */
-        url("../assets/img/image.jpg");
+    background-image: 
+    linear-gradient(90deg, #373335, rgba(73, 252, 67, 0.115)),
+    url("../assets/img/image.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 1.3;
@@ -96,8 +102,10 @@ body {
 .form{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    margin-right: 100px;
+    margin-top: 50px;
+    padding: 80px;
     width: 50%;
     height: 100%;
     gap: 30px;
@@ -112,7 +120,6 @@ body {
     outline: 0;
     border: 1px solid gray;
     background-color: transparent;
-    border-radius: 7px;
 }
 
 .form textarea{
@@ -121,21 +128,123 @@ body {
     width: 500px;
     height: 200px;
     overflow-y: hidden;
-    margin-left: 100px;
 }
 
-.form input:focus{
+.form input:focus, .form textarea:focus{
     border-color: #f8676b;
 }
 
-.drinks {
-    width: 50%;
+
+.btnAgende, .btnEnviar {
+    width: 200px;
+    font-size: 1rem;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    margin-top: 50px;
+    background-color: #F8676B;
+    color: #fcf5eb;
+    font-family: 'DM Sans', sans-serif;
+    padding: 20px;
+    border: none;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 0 #fcf5eb;
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+.btnEnviar {
+    width: 100px;
+}
+
+.btnAgende:hover, .btnEnviar:hover{
+    box-shadow: inset 400px 0 0 0 #fcf5eb;
+    color: #F8676B;
+    border-color: #fcf5eb;
+    transition: all .3s ease;
+}
+
+.sugestoes {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.drinks-container {
+    text-align: center;
+    height: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.drinks-container .title {
+    font-family: 'DancingScript', cursive;
+    color: #F8676B;
+    font-size: 40px;
+}
+
+.drinks-container::-webkit-scrollbar {
+    width: 0! important
+}
+
+.drinks-container .drinks{
+    position: relative;
+    width: 260px;
+    height: 340px;
+    overflow: hidden;
+    display: inline-block;
+    margin: 20px;
+    box-shadow: 2px 2px black;
 }
 
 
+.drinks-container .drinks img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: all .3s;
+    position: relative;
+}
 
-@media (max-width: 673px)
+.drinks-container .drinks:hover img{
+    filter: blur(3px);
+    transform: scale(1.1)
+}
+
+.drinks-container .drinks:hover .description-drink{
+    top:0em;
+}
+
+.description-drink {
+    font-size: 16px;
+    padding: 10px;
+    position: absolute;
+    color: #fcf5eb;
+    background-color: #000000c3;
+    width: 100%;
+    height: 340px;
+    top: 17em;
+    display: flex;
+    flex-direction: column;
+    transition: all .3s;
+    word-wrap: break-word;
+    z-index: 1;
+}
+
+.description-drink h1 {
+    font-family: 'DancingScript', cursive;
+    margin: 0 auto;
+}
+
+.description-drink p {
+    font-size: 1rem;
+}
+
+
+@media (max-width: 898px)
 {
   .right-side{
     display: none;
@@ -143,26 +252,17 @@ body {
   .left-side {
     margin: 0 auto;
   }
+
+  #appointment-page{
+        height: 100%;
+        flex-direction: column;
+        padding: 10px;
+        margin-top: 300px;
+        overflow: scroll;
+    }
+
+   .form {
+        margin-top: 800px;
+        margin-right: 300px;
+    }
 }
-
-.btnAgende {
-    margin-top: 30px;
-    background-color: #F8676B;
-    color: #fcf5eb;
-    font-family: 'DM Sans', sans-serif;
-    padding: 8px;
-    border-radius: 10px;
-    border-color: #F8676B;
-    cursor: pointer;
-    box-shadow: 1px 1px black;
-}
-
-.btnAgende:hover{
-    background-color: #fcf5eb;
-    color: #F8676B;
-    border-color: #fcf5eb;
-    transition: all .3s ease;
-}
-
-
-
