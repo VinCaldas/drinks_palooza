@@ -186,7 +186,7 @@ body {
 
 .btnEnviar {
     width: 100px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .btnAgende:hover, .btnEnviar:hover{
@@ -289,6 +289,12 @@ body {
   }
   .left-side {
     margin: 0 auto;
+  }
+  .logo{
+    font-size: 60px;
+  }
+  .instagram {
+    margin-right: -80px;
   }
 
   #appointment-page{
