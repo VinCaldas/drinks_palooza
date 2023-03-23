@@ -155,6 +155,10 @@ body {
     overflow-y: hidden;
 }
 
+.form i{
+    display: none;
+}
+
 .form input:focus, .form textarea:focus{
     border-color: var(--red);
 }
@@ -308,6 +312,7 @@ body {
    .form {
         margin-top: 800px;
         margin-right: 300px;
+        position: relative;
     }
 
     .form textarea {
@@ -316,6 +321,14 @@ body {
 
     .suggestions{
         margin-left: 0px;
-        margin-top: 60px;
+        margin-top: -15px;
+    }
+    .form i{
+        font-size: 30px;
+        position: absolute;
+        right: -200px;
+        bottom: 100px;
+        display: block;
     }
 }
+    
