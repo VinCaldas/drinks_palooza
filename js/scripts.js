@@ -1,7 +1,7 @@
 const $dateButton = document.querySelectorAll('.date')
 const $menuDates = document.querySelector('.menu-dates')
 const $btnMenu = document.querySelector('#wrapper-admin i')
-const $allInputs = document.querySelectorAll('input')
+const $allInputs = document.querySelectorAll('.input')
 const $errorToast = document.querySelector('.error-toast')
 
 let activeDate = ''
@@ -22,18 +22,18 @@ $btnMenu.addEventListener('click', () => {
 })
 
 function verifyInputs(){
-    const textarea = document.querySelector('textarea')
-    if(textarea.value.length == 0){
-        console.log(textarea.placeholder)
-        textarea.classList.add('error-form')
-        showErrorToast()
-    }
-    console.log($allInputs + textarea)
     $allInputs.forEach((input) => {
         if(input.value.length == 0){
             input.classList.add('error-form')
             showErrorToast()
         }
+        if(input.placeholder == "E-mail"){
+            if(input.value.indexOf("@") == -1){
+                input.classList.add('error-form')
+                showErrorToast()   
+            }
+        }
+
     })
 }
 
