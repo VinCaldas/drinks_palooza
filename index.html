@@ -27,15 +27,28 @@
         </div>
     
         <div id="appointment-page">
-            <form class="form">
+            <div class="error-toast">
+                <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
+                <div class="error-message">
+                    <span>Todas os campos devem ser preenchidos!</span>
+                </div>
+            </div>
+            <form class="form" name="formAgendamento" method="post">
                 <h1>Agende nosso serviço!</h1>
-                <input type="text" name="name" placeholder="Nome">
-                <input type="text" name="name" placeholder="Telefone">
-                <input type="text" name="name" placeholder="E-mail">
-                <input type="text" name="name" placeholder="Localidade do evento">
-                <textarea type="text" name="pedido" placeholder="Sua solicitação e observações" id="pedido"></textarea>
-                <button class="btnEnviar" type="submit">Enviar</button>
-                <i class="fa-solid fa-arrow-down" style="color: #f8676b;"></i>
+                <input type="text" name="name" class="input" placeholder="Nome">
+                <input type="text" name="name" class="input" placeholder="Telefone">
+                <input type="text" name="name" class="input" placeholder="E-mail">
+                <input type="text" name="name" class="input" placeholder="Localidade do evento">
+                <div class="date-container">
+                    <label>Data do evento: </label>
+                <input type="date" id="dataEvento" name="dataEvento" class="input" placeholder="Data do Evento">
+                </div>
+                <div class="time-container">
+                    <label>Horário do evento: </label>
+                <input type="time" id="horaEvento" name="horaEvento" class="input" placeholder="Horário do Evento">
+                </div>
+                <textarea type="text" name="pedido" class="input" placeholder="Sua solicitação e observações" id="pedido"></textarea>
+                <button class="btnEnviar" type="button" onclick="verifyInputs()">Enviar</button>
             </form>
             <div class="suggestions">
                 <h1 class="suggestions-title">Sugestões</h1>
