@@ -1,8 +1,10 @@
 const $dateButton = document.querySelectorAll('.date')
 const $menuDates = document.querySelector('.menu-dates')
 const $btnMenu = document.querySelector('#wrapper-admin i')
-const $allInputs = document.querySelectorAll('input')
+const $allInputs = document.querySelectorAll('.input')
 const $errorToast = document.querySelector('.error-toast')
+const $appointmentPage = document.querySelector('#appointment-page')
+const $suggestionsContainer = document.querySelector('.suggestions')
 
 let activeDate = ''
 
@@ -21,19 +23,25 @@ $btnMenu.addEventListener('click', () => {
     toggleMenuDates()
 })
 
+
 function verifyInputs(){
-    const textarea = document.querySelector('textarea')
-    if(textarea.value.length == 0){
-        console.log(textarea.placeholder)
-        textarea.classList.add('error-form')
-        showErrorToast()
-    }
-    console.log($allInputs + textarea)
     $allInputs.forEach((input) => {
         if(input.value.length == 0){
             input.classList.add('error-form')
-            showErrorToast()
+            showErrorToast("Todos os campos devem ser preenchidos!")
         }
+        if(input.placeholder == 'E-mail'){
+            if(input.value.indexOf('@') == -1){
+                input.classList.add('error-form')
+                showErrorToast("E-mail inválido!")
+           }          
+        }
+        if(input.placeholder == 'Telefone'){
+            if(input.value.indexOf('e') != -1){
+                input.classList.add('error-form')
+                showErrorToast("Telefone inválido!")
+        } 
+        }     
     })
 }
 
@@ -49,9 +57,18 @@ function toggleMenuDates(){
     $menuDates.classList.remove('toggle')
 }
 
-function showErrorToast(){
+function showErrorToast(message){
+    document.querySelector('.message').textContent = message
     $errorToast.classList.add('show')
     setTimeout(() => {
         $errorToast.classList.remove('show')
     }, 3000)
+}
+
+function showSuggestions(){
+    $suggestionsContainer.classList.add('showSuggestions')
+}
+
+function hideSuggestions(){
+    $suggestionsContainer.classList.remove('showSuggestions')
 }

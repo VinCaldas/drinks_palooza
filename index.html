@@ -30,14 +30,14 @@
             <div class="error-toast">
                 <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
                 <div class="error-message">
-                    <span>Todas os campos devem ser preenchidos!</span>
+                    <span class="message"></span>
                 </div>
             </div>
             <form class="form" name="formAgendamento" method="post">
                 <h1>Agende nosso serviço!</h1>
                 <input type="text" name="name" class="input" placeholder="Nome">
-                <input type="text" name="name" class="input" placeholder="Telefone">
-                <input type="text" name="name" class="input" placeholder="E-mail">
+                <input type="number" name="name" class="input" placeholder="Telefone">
+                <input type="email" name="name" class="input" placeholder="E-mail">
                 <input type="text" name="name" class="input" placeholder="Localidade do evento">
                 <div class="date-container">
                     <label>Data do evento: </label>
@@ -49,8 +49,10 @@
                 </div>
                 <textarea type="text" name="pedido" class="input" placeholder="Sua solicitação e observações" id="pedido"></textarea>
                 <button class="btnEnviar" type="button" onclick="verifyInputs()">Enviar</button>
+                <button class="btnSugestoes" type="button" onclick="showSuggestions()">Ver Sugestões</button>
             </form>
             <div class="suggestions">
+                <i class="fa-solid fa-xmark" onclick="hideSuggestions()"></i>
                 <h1 class="suggestions-title">Sugestões</h1>
                 <div class="drinks-container">
                     <div class="drinks">

@@ -8,7 +8,7 @@
 :root{
     --red: #f8676b;
     --white: #fcf5eb;
-    --background: #141414;
+    --background: #0b0909;
     --bacound: #00000045;
 }
 
@@ -108,12 +108,6 @@ body {
     white-space: nowrap;
 }
 
-@keyframes PositionImageAnimation {
-    0% {
-		background-position: 60% 0%;
-	}
-}
-
 
 .right-side{
     width: 50%;
@@ -125,7 +119,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 1.3;
-    animation: fade 2s, PositionImageAnimation 3s;
 }
 
 .form{
@@ -137,7 +130,6 @@ body {
     height: 70%;
     gap: 17px;
 }
-
 
 .form input, .form textarea {
     color: var(--white);
@@ -241,7 +233,7 @@ input[type=time]{
 }
 
 
-.btnAgende, .btnEnviar {
+.btnAgende, .btnEnviar, .btnSugestoes {
     width: 200px;
     font-size: 1rem;
     letter-spacing: -1px;
@@ -260,6 +252,11 @@ input[type=time]{
 
 .btnEnviar {
     width: 100px;
+}
+
+.btnSugestoes{
+    display: none;
+    width: 300px;
 }
 
 .btnAgende:hover, .btnEnviar:hover{
@@ -304,6 +301,10 @@ input[type=time]{
     color: var(--red);
     font-size: 40px;
     margin-bottom: 2px;
+}
+
+.suggestions i {
+    display: none;
 }
 
 
@@ -384,22 +385,23 @@ input[type=time]{
 
   #appointment-page{
         height: 100%;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         padding: 10px;
         margin-top: 300px;
         overflow: scroll;
+        overflow-x: hidden;
         padding-top: 30px;
+        position: relative;
     }
 
    .form {
-        margin-top: 880px;
+        margin-top: 270px;
         margin-bottom: 200px;
         width: 100%;
         justify-content: center;
         align-items: center;
-        position: relative;
     }
 
     .time-container, .date-container{
@@ -416,13 +418,33 @@ input[type=time]{
         width: 300px;
     }
 
-    .suggestions{
-        margin-left: 0px;
-        margin-top: -15px;
+    .showSuggestions{
+        margin-left: 0 !important;
+        background-color: var(--background);
     }
 
+    .suggestions{
+       margin-left: 700px;
+       position: absolute !important;
+       margin-bottom: 10px;
+       position: relative;
+       transition: all .4s;
+    }
+
+    .suggestions i {
+        display: block;
+        color: var(--red);
+        position: absolute;
+        top: 18px;
+        left: 30px;
+        font-size: 35px;
+    }
     .btnEnviar{
         width: 300px;
+    }
+
+    .btnSugestoes{
+        display: block;
     }
 }
 
