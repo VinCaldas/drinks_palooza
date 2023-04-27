@@ -8,7 +8,7 @@
 :root{
     --red: #f8676b;
     --white: #fcf5eb;
-    --background: #0b0909;
+    --background: #141414;
     --bacound: #00000045;
 }
 
@@ -425,10 +425,9 @@ input[type=time]{
 
     .suggestions{
        margin-left: 700px;
-       position: absolute !important;
        margin-bottom: 10px;
+       position: absolute !important;
        position: relative;
-       transition: all .4s;
     }
 
     .suggestions i {
@@ -439,6 +438,7 @@ input[type=time]{
         left: 30px;
         font-size: 35px;
     }
+
     .btnEnviar{
         width: 300px;
     }
