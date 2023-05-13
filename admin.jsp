@@ -12,8 +12,30 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
     <script src="js/scripts.js" defer="defer"></script>
 </head>
 <body>
+    <script>
+
+        // function formatDateQuery(date){
+        //     date = date.replaceAll("/", "")
+        //     let year = date.slice(4, 8)
+        //     let month = date.slice(2, 4)
+        //     let day = date.slice(0, 2)
+        //     return `${year}-${month}-${day}`
+        // }
+        // let activeDate = ''
+        // let teste = {}
+        // document.querySelectorAll(".date").forEach((date) => {
+        //     date.addEventListener("click", (e) => {
+        //         activeDate = e.currentTarget.childNodes[1].textContent
+        //         activeDate = formatDateQuery(activeDate)
+
+        //     })
+        // })
+
+            
+    </script>
     <%
-        String vDate = "2023-05-14";
+
+        String vDate = request.getParameter("date");
 
         String banco    = "drinkspalooza" ;
         String endereco = "jdbc:mysql://localhost:3306/" + banco ;
@@ -58,6 +80,7 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
         <aside class="menu-dates">
             <h1 class="logo">Drink's Palooza</h1>
             <div class="container-dates">
+            <input name="activeDate" type="submit" class="activeDate" onchange="call()" style="display: none;">
                 <%-- <div class="date active">
                     <span>13/04/2023</span>
                 </div>
@@ -102,5 +125,7 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
             </div>
         </main>
     </div>
+
+  
 </body>
 </html>
