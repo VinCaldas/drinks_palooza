@@ -1,14 +1,19 @@
 const $dateButton = document.querySelectorAll('.date')
+const $date = document.querySelectorAll('.date span')
 const $menuDates = document.querySelector('.menu-dates')
 const $btnMenu = document.querySelector('#wrapper-admin i')
 const $allInputs = document.querySelectorAll('.input')
 const $errorToast = document.querySelector('.error-toast')
 const $appointmentPage = document.querySelector('#appointment-page')
 const $suggestionsContainer = document.querySelector('.suggestions')
+const $inputPhone = document.querySelector('input[name=telefone]')
+const $btnEnviar = document.querySelector('.btnEnviar')
+
 
 let activeDate = ''
 
 $dateButton.forEach((date) => {
+    date.childNodes[1].textContent = formatDate(date.childNodes[1].textContent)
     date.addEventListener("click", (e) => {
         removeIsActive()
 
@@ -19,10 +24,9 @@ $dateButton.forEach((date) => {
     })
 })
 
-$btnMenu.addEventListener('click', () => {
-    toggleMenuDates()
-})
-
+// $btnEnviar.addEventListener("click", (e) => {
+//     e.preventDefault()
+// })
 
 function verifyInputs(){
     $allInputs.forEach((input) => {
@@ -35,14 +39,17 @@ function verifyInputs(){
                 input.classList.add('error-form')
                 showErrorToast("E-mail inválido!")
            }          
-        }
-        if(input.placeholder == 'Telefone'){
-            if(input.value.indexOf('e') != -1){
-                input.classList.add('error-form')
-                showErrorToast("Telefone inválido!")
-        } 
-        }     
+        }    
     })
+}
+
+function formatDate(date){
+    date = date.replaceAll("-", "")
+    let year = date.slice(0, 4)
+    let month = date.slice(4, 6)
+    let day = date.slice(6, 8)
+    const formatedDate = `${day}/${month}/${year}`
+    return formatedDate;
 }
 
 function removeIsActive(){
@@ -56,6 +63,10 @@ function toggleMenuDates(){
     $menuDates.classList.add('toggle') :
     $menuDates.classList.remove('toggle')
 }
+
+$btnMenu.addEventListener('click', () => {
+    toggleMenuDates()
+})
 
 function showErrorToast(message){
     document.querySelector('.message').textContent = message
@@ -71,4 +82,25 @@ function showSuggestions(){
 
 function hideSuggestions(){
     $suggestionsContainer.classList.remove('showSuggestions')
+}
+
+document.querySelector('.form').addEventListener('focusin', (event) =>{
+    mascaraTelefone($inputPhone)
+})
+
+const mascaraTelefone = (valor) => {
+    let test = valor.value
+    test = test.replace(/\D/g, "")
+    test = test.replace(/^(\d{2})(\d)/g, "($1) $2")
+    test = test.replace(/(\d)(\d{4})$/, "$1-$2")
+    valor.value = test
+}
+
+function onlyNumberKey(evt) {
+              
+    // Only ASCII character in that range allowed
+    var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+        return false;
+    return true;
 }
