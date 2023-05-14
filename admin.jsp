@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1" import="java.sql.*" %>
+<%@ page language="java" contentType="text/html charset=UTF-8"
+pageEncoding="UTF-8" import="java.sql.*" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,27 +12,6 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
     <script src="js/scripts.js" defer="defer"></script>
 </head>
 <body>
-    <script>
-
-        // function formatDateQuery(date){
-        //     date = date.replaceAll("/", "")
-        //     let year = date.slice(4, 8)
-        //     let month = date.slice(2, 4)
-        //     let day = date.slice(0, 2)
-        //     return `${year}-${month}-${day}`
-        // }
-        // let activeDate = ''
-        // let teste = {}
-        // document.querySelectorAll(".date").forEach((date) => {
-        //     date.addEventListener("click", (e) => {
-        //         activeDate = e.currentTarget.childNodes[1].textContent
-        //         activeDate = formatDateQuery(activeDate)
-
-        //     })
-        // })
-
-            
-    </script>
     <%
 
         String vDate = request.getParameter("date");
@@ -55,6 +34,7 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
 
         String sqlSelectAll = "SELECT * FROM agendamento";
         String sqlWhere = "SELECT * FROM agendamento WHERE data_evento = ?";
+        String sqlGetClient = "SELECT * FROM clientes WHERE id_cliente = ?";
 
         // Cria o statement para executar o camando no banco
         PreparedStatement stm = conexao.prepareStatement( sqlSelectAll );
@@ -62,17 +42,19 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
 
         PreparedStatement stmWhere = conexao.prepareStatement( sqlWhere );
         stmWhere.setString(1, vDate);
-        ResultSet dadosWhere = stmWhere.executeQuery();
-        while ( dadosWhere.next() ){
-            out.print(dadosWhere.getString("endereco_evento"));
+
+        int idCliente = 28;
+        ResultSet id = stmWhere.executeQuery();
+
+        while(id.next()) {
+            idCliente = id.getInt("id_cliente");
         }
-        //ArrayList<String> datas_eventos = new ArrayList<String>();
 
-        //while ( dados.next() ){
-            //datas_eventos.add(dados.getString("data_evento").replace("-",""));
-        //}
-        //out.print(datas_eventos.get(0));
+        ResultSet dataAppointment = stmWhere.executeQuery();
 
+        PreparedStatement stmGetClient = conexao.prepareStatement( sqlGetClient );
+        stmGetClient.setInt(1, idCliente);
+        ResultSet clientData = stmGetClient.executeQuery();
     
     %>
     <div id="wrapper-admin">
@@ -80,49 +62,38 @@ pageEncoding="ISO-8859-1" import="java.sql.*" %>
         <aside class="menu-dates">
             <h1 class="logo">Drink's Palooza</h1>
             <div class="container-dates">
-            <input name="activeDate" type="submit" class="activeDate" onchange="call()" style="display: none;">
-                <%-- <div class="date active">
-                    <span>13/04/2023</span>
-                </div>
-                <div class="date">
-                    <span>14/04/2023</span>
-                </div>
-                <div class="date">
-                    <span>14/04/2023</span>
-                </div> --%>
                 <%
                     while (dados.next()){ %>
                         <div class="date" name="date">
                             <span><%out.print(dados.getString("data_evento"));%></span>
                         </div>
                     <% } %>
-                
-                
-                <%-- <script>
-                    var datas = <%out.print(datas_eventos);%>
-                    for (let i = 0; i < datas.length; i++) {
-                        console.log(<%out.print(datas_eventos.get(1));%>)
-                        
-                    }
-                </script> --%>
             </div>
         </aside>
         <main class="appointments-container">
+        <% if (dataAppointment.next() != false && clientData.next() != false) { %>
             <div class="appointment-details">
                 <div class="date__time"> 
                     <i class="fa-solid fa-calendar-days"></i>
-                    <span class="appointment-date">14/04/2023</span>
+                    <span class="appointment-date">
+                    <script>
+                        document.write(localStorage.getItem("activeDate") !== null ?  localStorage.getItem("activeDate") : "");
+                    </script></span>
                     <i class="fa-solid fa-clock"></i>
-                    <span class="appointment-time">22:00</span>
+                    <span class="appointment-time"><%
+                        String[] parts = dataAppointment.getString("hora_evento").split(":");
+                        out.print(parts[0]+":"+parts[1]);
+                    %></span>
                 </div>
                 <div class="appointment-info">
-                    <h2><i class="fa-solid fa-user"></i>Alison Mateus</h2>                
-                    <h2><i class="fa-solid fa-envelope"></i>alisonn2077@gmail.com</h2>
-                    <h2><i class="fa-solid fa-phone"></i>11982071223</h2> 
-                    <h2><i class="fa-solid fa-location-dot" style="margin-left: 3px"></i>Rua A 23 08248234</h2>
-                    <h2 class="pedido">drink drink drink drink drink rink drink drikn</h2>   
+                    <h2><i class="fa-solid fa-user"></i><%out.print(clientData.getString("nome"));%></h2>                
+                    <h2><i class="fa-solid fa-envelope"></i><%out.print(clientData.getString("email"));%></h2>
+                    <h2><i class="fa-solid fa-phone"></i><%out.print(clientData.getString("telefone"));%></h2> 
+                    <h2><i class="fa-solid fa-location-dot" style="margin-left: 3px"></i><%{out.print(dataAppointment.getString("endereco_evento"));};%></h2>
+                    <h2 class="pedido"><%out.print(dataAppointment.getString("pedido"));%></h2>   
                 </div>
             </div>
+        <%}%>
         </main>
     </div>
 

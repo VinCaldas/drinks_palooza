@@ -5,7 +5,7 @@
     String vemail = request.getParameter("email") ;
     String vdata = request.getParameter("dataEvento");
     String vhora = request.getParameter("horaEvento") ;
-    String vendereco = request.getParameter("naendereçome") ;
+    String vendereco = request.getParameter("endereco") ;
     int vidcliente = 1 ;
     String vpedido = request.getParameter("pedido") ;
 

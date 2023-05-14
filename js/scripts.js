@@ -8,7 +8,6 @@ const $appointmentPage = document.querySelector('#appointment-page')
 const $suggestionsContainer = document.querySelector('.suggestions')
 const $inputPhone = document.querySelector('input[name=telefone]')
 const $btnEnviar = document.querySelector('.btnEnviar')
-const $inputHideDate = document.querySelector('input[name=activeDate]')
 
 
 let activeDate = ''
@@ -16,23 +15,24 @@ let activeDate = ''
 $dateButton.forEach((date) => {   
     date.childNodes[1].textContent = formatDate(date.childNodes[1].textContent)
     date.addEventListener("click", (e) => {
-        removeIsActive()
-
         activeDate = e.currentTarget.childNodes[1].textContent
-        activeDate = formatDateQuery(activeDate)
-        $inputHideDate.value = activeDate
-        console.log(activeDate)
-        window.location.replace("admin.jsp?date="+activeDate);
+        // activeDate = formatDateQuery(activeDate)
+        localStorage.setItem("activeDate", activeDate)
+        window.location.replace("admin.jsp?date="+formatDateQuery(activeDate));
 
-        date.classList.add("active")
+        activeDate = formatDate(activeDate)
         toggleMenuDates()
     })
 })
 
-
-// $btnEnviar.addEventListener("click", (e) => {
-//     e.preventDefault()
-// })
+window.onload = () => {
+    localStorage.key("activeDate")
+    $date.forEach((date) => {
+        if(date.textContent === localStorage.getItem("activeDate")){
+            date.parentNode.classList.add("active")
+        }
+    })
+}
 
 function verifyInputs(){
     $allInputs.forEach((input) => {
@@ -66,21 +66,17 @@ function formatDateQuery(date){
     return `${year}-${month}-${day}`
 }
 
-function removeIsActive(){
-    const activeDate = document.querySelector(".container-dates").querySelector(".active")  
-    activeDate ? activeDate.classList.remove('active') : null
-
-}
-
 function toggleMenuDates(){
     !$menuDates.classList.contains('toggle') ?
     $menuDates.classList.add('toggle') :
     $menuDates.classList.remove('toggle')
 }
 
-$btnMenu.addEventListener('click', () => {
-    toggleMenuDates()
-})
+if($btnMenu !== null){
+    $btnMenu.addEventListener('click', () => {
+        toggleMenuDates()
+    })
+}
 
 function showErrorToast(message){
     document.querySelector('.message').textContent = message

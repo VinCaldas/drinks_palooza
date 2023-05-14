@@ -36,7 +36,7 @@
             <form class="form" name="formAgendamento" method="post" action="jsp/grava.jsp">
                 <h1>Agende nosso serviço!</h1>
                 <input type="text" name="name" class="input" placeholder="Nome">
-                <input type="number" name="telefone" class="input" placeholder="Telefone">
+                <input type="text" onkeypress="return onlyNumberKey(event)" maxlength="14" name="telefone" class="input" placeholder="Telefone">
                 <input type="email" name="email" class="input" placeholder="E-mail">
                 <input type="text" name="endereco" class="input" placeholder="Localidade do evento">
                 <div class="date-container">
