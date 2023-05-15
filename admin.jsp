@@ -32,30 +32,20 @@ pageEncoding="UTF-8" import="java.sql.*" %>
         // Abrir a conexao com o banco
         conexao = DriverManager.getConnection(endereco, usuario, senha) ;
 
-        String sqlSelectAll = "SELECT * FROM agendamento";
-        String sqlWhere = "SELECT * FROM agendamento WHERE data_evento = ?";
+        String sqlSelectAll = "SELECT DISTINCT data_evento FROM agendamento";
+        String sqlGetAppointmentId = "SELECT id_agendamento FROM agendamento WHERE data_evento = ?";
+        String sqlGetAppointmentInfo = "SELECT * FROM agendamento WHERE id_agendamento = ?";
         String sqlGetClient = "SELECT * FROM clientes WHERE id_cliente = ?";
 
         // Cria o statement para executar o camando no banco
         PreparedStatement stm = conexao.prepareStatement( sqlSelectAll );
         ResultSet dados =  stm.executeQuery() ;
 
-        PreparedStatement stmWhere = conexao.prepareStatement( sqlWhere );
-        stmWhere.setString(1, vDate);
+        PreparedStatement stmGetAppointmentId = conexao.prepareStatement( sqlGetAppointmentId );
+        stmGetAppointmentId.setString(1, vDate);
 
-        int idCliente = 28;
-        ResultSet id = stmWhere.executeQuery();
-
-        while(id.next()) {
-            idCliente = id.getInt("id_cliente");
-        }
-
-        ResultSet dataAppointment = stmWhere.executeQuery();
-
-        PreparedStatement stmGetClient = conexao.prepareStatement( sqlGetClient );
-        stmGetClient.setInt(1, idCliente);
-        ResultSet clientData = stmGetClient.executeQuery();
-    
+        PreparedStatement stmGetAppointmentInfo = conexao.prepareStatement( sqlGetAppointmentInfo );
+        ResultSet appointment_id =  stmGetAppointmentId.executeQuery() ;
     %>
     <div id="wrapper-admin">
         <i class="fa-sharp fa-solid fa-bars menu-icon"></i>
@@ -67,11 +57,29 @@ pageEncoding="UTF-8" import="java.sql.*" %>
                         <div class="date" name="date">
                             <span><%out.print(dados.getString("data_evento"));%></span>
                         </div>
+                    
                     <% } %>
             </div>
         </aside>
         <main class="appointments-container">
-        <% if (dataAppointment.next() != false && clientData.next() != false) { %>
+        <% while (appointment_id.next()) { %>
+        <% stmGetAppointmentInfo.setInt(1, appointment_id.getInt("id_agendamento")); 
+            stmGetAppointmentInfo.executeQuery();
+
+            int idCliente = 28;
+            ResultSet id = stmGetAppointmentInfo.executeQuery();
+
+            while(id.next()) {
+                idCliente = id.getInt("id_cliente");
+            }
+
+            PreparedStatement stmGetClient = conexao.prepareStatement( sqlGetClient );
+            stmGetClient.setInt(1, idCliente);
+            ResultSet clientData = stmGetClient.executeQuery();
+            ResultSet dataAppointment = stmGetAppointmentInfo.executeQuery();
+            dataAppointment.next();
+            clientData.next();
+        %>
             <div class="appointment-details">
                 <div class="date__time"> 
                     <i class="fa-solid fa-calendar-days"></i>
