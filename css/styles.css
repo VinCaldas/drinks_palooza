@@ -521,10 +521,13 @@ input[type=number] {
 } 
 
 .appointments-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
     align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    overflow-y: auto;
+    gap: 50px;
+    padding-top: 100px;
     width: 80%;
     height: 100%;
 }
@@ -580,7 +583,7 @@ input[type=number] {
 }
 
 
-@media (max-width: 898px)
+@media (max-width: 1305px)
 {
     #wrapper-admin{
         position: relative;
@@ -599,16 +602,31 @@ input[type=number] {
 
     .toggle{
         margin-left: 0;
-        width: 85%;
+        width: 60%;
     }
 
     .appointments-container{
         width:100%;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        gap: 30px;
+        padding-top: 4rem;
     }
 
+    .appointment-details{
+        max-width: 500px;
+        height: 550px;
+    }
+
+}
+
+@media (max-width: 499px){
     .appointment-details{
         width: 350px;
         height: 550px;
     }
 
+    .toggle{
+        width: 85%;
+    }
 }

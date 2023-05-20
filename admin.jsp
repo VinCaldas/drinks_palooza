@@ -32,20 +32,20 @@ pageEncoding="UTF-8" import="java.sql.*" %>
         // Abrir a conexao com o banco
         conexao = DriverManager.getConnection(endereco, usuario, senha) ;
 
-        String sqlSelectAll = "SELECT DISTINCT data_evento FROM agendamento";
+        String sqlSelectAllDates = "SELECT DISTINCT data_evento FROM agendamento";
         String sqlGetAppointmentId = "SELECT id_agendamento FROM agendamento WHERE data_evento = ?";
         String sqlGetAppointmentInfo = "SELECT * FROM agendamento WHERE id_agendamento = ?";
         String sqlGetClient = "SELECT * FROM clientes WHERE id_cliente = ?";
 
         // Cria o statement para executar o camando no banco
-        PreparedStatement stm = conexao.prepareStatement( sqlSelectAll );
-        ResultSet dados =  stm.executeQuery() ;
+        PreparedStatement stmSelectAllDates = conexao.prepareStatement( sqlSelectAllDates );
+        ResultSet dates =  stmSelectAllDates.executeQuery();
 
         PreparedStatement stmGetAppointmentId = conexao.prepareStatement( sqlGetAppointmentId );
         stmGetAppointmentId.setString(1, vDate);
 
         PreparedStatement stmGetAppointmentInfo = conexao.prepareStatement( sqlGetAppointmentInfo );
-        ResultSet appointment_id =  stmGetAppointmentId.executeQuery() ;
+        ResultSet appointment_id =  stmGetAppointmentId.executeQuery();
     %>
     <div id="wrapper-admin">
         <i class="fa-sharp fa-solid fa-bars menu-icon"></i>
@@ -53,9 +53,9 @@ pageEncoding="UTF-8" import="java.sql.*" %>
             <h1 class="logo">Drink's Palooza</h1>
             <div class="container-dates">
                 <%
-                    while (dados.next()){ %>
+                    while (dates.next()){ %>
                         <div class="date" name="date">
-                            <span><%out.print(dados.getString("data_evento"));%></span>
+                            <span><%out.print(dates.getString("data_evento"));%></span>
                         </div>
                     
                     <% } %>
@@ -91,6 +91,28 @@ pageEncoding="UTF-8" import="java.sql.*" %>
                     <span class="appointment-time"><%
                         String[] parts = dataAppointment.getString("hora_evento").split(":");
                         out.print(parts[0]+":"+parts[1]);
+                    %></span>
+                </div>
+                <div class="appointment-info">
+                    <h2><i class="fa-solid fa-user"></i><%out.print(clientData.getString("nome"));%></h2>                
+                    <h2><i class="fa-solid fa-envelope"></i><%out.print(clientData.getString("email"));%></h2>
+                    <h2><i class="fa-solid fa-phone"></i><%out.print(clientData.getString("telefone"));%></h2> 
+                    <h2><i class="fa-solid fa-location-dot" style="margin-left: 3px"></i><%{out.print(dataAppointment.getString("endereco_evento"));};%></h2>
+                    <h2 class="pedido"><%out.print(dataAppointment.getString("pedido"));%></h2>   
+                </div>
+            </div>
+
+            <div class="appointment-details">
+                <div class="date__time"> 
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span class="appointment-date">
+                    <script>
+                        document.write(localStorage.getItem("activeDate") !== null ?  localStorage.getItem("activeDate") : "");
+                    </script></span>
+                    <i class="fa-solid fa-clock"></i>
+                    <span class="appointment-time"><%
+                        String[] parts2 = dataAppointment.getString("hora_evento").split(":");
+                        out.print(parts2[0]+":"+parts2[1]);
                     %></span>
                 </div>
                 <div class="appointment-info">

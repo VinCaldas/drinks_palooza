@@ -16,9 +16,8 @@ $dateButton.forEach((date) => {
     date.childNodes[1].textContent = formatDate(date.childNodes[1].textContent)
     date.addEventListener("click", (e) => {
         activeDate = e.currentTarget.childNodes[1].textContent
-        // activeDate = formatDateQuery(activeDate)
         localStorage.setItem("activeDate", activeDate)
-        window.location.replace("admin.jsp?date="+formatDateQuery(activeDate));
+        window.location.replace("admin.jsp?date="+formatDateForQuery(activeDate));
 
         activeDate = formatDate(activeDate)
         toggleMenuDates()
@@ -33,6 +32,16 @@ window.onload = () => {
         }
     })
 }
+
+if($btnMenu !== null){
+    $btnMenu.addEventListener('click', () => {
+        toggleMenuDates()
+    })
+}
+
+document.querySelector('.form').addEventListener('focusin', () =>{
+    phoneMask($inputPhone)
+})
 
 function verifyInputs(){
     $allInputs.forEach((input) => {
@@ -58,7 +67,7 @@ function formatDate(date){
 
 }
 
-function formatDateQuery(date){
+function formatDateForQuery(date){
     date = date.replaceAll("/", "")
     let year = date.slice(4, 8)
     let month = date.slice(2, 4)
@@ -70,12 +79,6 @@ function toggleMenuDates(){
     !$menuDates.classList.contains('toggle') ?
     $menuDates.classList.add('toggle') :
     $menuDates.classList.remove('toggle')
-}
-
-if($btnMenu !== null){
-    $btnMenu.addEventListener('click', () => {
-        toggleMenuDates()
-    })
 }
 
 function showErrorToast(message){
@@ -94,11 +97,7 @@ function hideSuggestions(){
     $suggestionsContainer.classList.remove('showSuggestions')
 }
 
-document.querySelector('.form').addEventListener('focusin', (event) =>{
-    mascaraTelefone($inputPhone)
-})
-
-const mascaraTelefone = (valor) => {
+const phoneMask = (valor) => {
     let test = valor.value
     test = test.replace(/\D/g, "")
     test = test.replace(/^(\d{2})(\d)/g, "($1) $2")
