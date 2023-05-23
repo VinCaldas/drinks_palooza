@@ -40,13 +40,14 @@ body {
     height: 100vh;
     display: flex;
     animation: fade 1.5s;
+    overflow-x: hidden;
+    position: relative;
     scroll-snap-align: center;
 }
 
 #appointment-page{
     justify-content: center;
     align-items: center;
-    position: relative;
     overflow-x: hidden;
 }
 
@@ -142,6 +143,13 @@ body {
     background-color: transparent;
 }
 
+.form-login input{
+    width: 400px;
+    height: 40px;
+    font-size: 16px;
+    margin: 0 auto;
+}
+
 .date-container, .time-container {
     display: flex;
     justify-content: space-between;
@@ -162,28 +170,37 @@ label {
     border: 1px solid red !important;
 }
 
-.error-toast{
+.toast{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     position: absolute;
-    width: 400px;
-    height: 80px;
     font: 16px;
     background-color: #0b0909;
     color: var(--white);
+    z-index: 999;
+    width: 400px;
     top: 70px;
     right: 0;
-    z-index: 999;
     margin-right: -400px;
     transition: all .4s;
+}
+
+.error {
+    height: 80px;
+}
+
+.success{
+    height: 100px;
+    top: 70px;
+    right: 0;
 }
 
 .show {
     margin-right: 0;
 }
 
-.error-toast .error-message{
+.message-container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -192,7 +209,12 @@ label {
     height: 100%;
 }
 
-.error-toast i {
+.success .message-container{
+    flex-direction: column;
+    gap: 15px;
+}
+
+.error i, .success i {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -201,6 +223,10 @@ label {
     height: 100%;
     background-color: red;
 }
+.success i{
+    background-color: green;
+}
+
 
 input[type=time]{
     margin-top: 5px;
@@ -243,7 +269,7 @@ input[type=number] {
 }
 
 
-.btnAgende, .btnEnviar, .btnSugestoes {
+.btnAgende, .btnEnviar, .btnSugestoes, .btnEntrar {
     width: 200px;
     font-size: 1rem;
     letter-spacing: -1px;
@@ -260,6 +286,10 @@ input[type=number] {
     transition: ease-out 0.4s;
 }
 
+.btnEntrar{
+    margin: 0 auto;
+}
+
 .btnEnviar {
     width: 100px;
 }
@@ -269,7 +299,7 @@ input[type=number] {
     width: 300px;
 }
 
-.btnAgende:hover, .btnEnviar:hover{
+.btnAgende:hover, .btnEnviar:hover, .btnEntrar:hover{
     box-shadow: inset 400px 0 0 0 var(--background);
     color: var(--red);
     transition: all .3s ease;
@@ -389,6 +419,10 @@ input[type=number] {
   .logo{
     font-size: 60px;
   }
+
+  .login-container .logo {
+  }
+
   .instagram {
     margin-right: -80px;
   }
@@ -414,6 +448,16 @@ input[type=number] {
         align-items: center;
     }
 
+    .form-login{
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 0;
+    }
+
+    .form-login input{
+        width: 200px;
+    }
+
     .time-container, .date-container{
         flex-direction: column;
         justify-content: flex-start;
@@ -424,7 +468,7 @@ input[type=number] {
         width: 300px;
     }
 
-    .error-toast{
+    .toast{
         width: 300px;
     }
 
@@ -474,7 +518,6 @@ input[type=number] {
     left: 20px;
     display: none;
 }
-
 .menu-dates {
     display: flex;
     flex-direction: column;
@@ -521,13 +564,12 @@ input[type=number] {
 } 
 
 .appointments-container{
-    display: grid;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-items: center;
-    grid-template-columns: repeat(2, 1fr);
     overflow-y: auto;
     gap: 50px;
-    padding-top: 100px;
     width: 80%;
     height: 100%;
 }
@@ -536,12 +578,16 @@ input[type=number] {
     display: flex;
     flex-direction: column;
     color: var(--white);
-    width: 500px;
-    height: 650px;
+    width: 400px;
+    min-height: 550px;
     overflow-y: auto;
     background-color: #0b0909;
     box-shadow: 1px 1px 10px #0b0909;
     padding: 20px;
+}
+
+.appointment-details:first-child{
+    margin-top: 10rem;
 }
 
 .appointment-info {
@@ -607,10 +653,14 @@ input[type=number] {
 
     .appointments-container{
         width:100%;
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(1, 1fr);
         gap: 30px;
-        padding-top: 4rem;
+        margin-top: 100px;
+        padding-top: 0;
+        overflow: wrap;
+    }
+
+    .appointment-details:first-child{
+        margin-top: 1rem;
     }
 
     .appointment-details{
@@ -629,4 +679,19 @@ input[type=number] {
     .toggle{
         width: 85%;
     }
+}
+
+/* CSS Login */
+
+.login-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container .logo{
+    margin-bottom: 0;
 }

@@ -7,9 +7,9 @@ pageEncoding="UTF-8" import="java.sql.*" %>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página do Administrador - Drink's Palooza</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
-    <script src="js/scripts.js" defer="defer"></script>
+    <script src="../js/admin.js" defer="defer"></script>
 </head>
 <body>
     <%
@@ -91,28 +91,6 @@ pageEncoding="UTF-8" import="java.sql.*" %>
                     <span class="appointment-time"><%
                         String[] parts = dataAppointment.getString("hora_evento").split(":");
                         out.print(parts[0]+":"+parts[1]);
-                    %></span>
-                </div>
-                <div class="appointment-info">
-                    <h2><i class="fa-solid fa-user"></i><%out.print(clientData.getString("nome"));%></h2>                
-                    <h2><i class="fa-solid fa-envelope"></i><%out.print(clientData.getString("email"));%></h2>
-                    <h2><i class="fa-solid fa-phone"></i><%out.print(clientData.getString("telefone"));%></h2> 
-                    <h2><i class="fa-solid fa-location-dot" style="margin-left: 3px"></i><%{out.print(dataAppointment.getString("endereco_evento"));};%></h2>
-                    <h2 class="pedido"><%out.print(dataAppointment.getString("pedido"));%></h2>   
-                </div>
-            </div>
-
-            <div class="appointment-details">
-                <div class="date__time"> 
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <span class="appointment-date">
-                    <script>
-                        document.write(localStorage.getItem("activeDate") !== null ?  localStorage.getItem("activeDate") : "");
-                    </script></span>
-                    <i class="fa-solid fa-clock"></i>
-                    <span class="appointment-time"><%
-                        String[] parts2 = dataAppointment.getString("hora_evento").split(":");
-                        out.print(parts2[0]+":"+parts2[1]);
                     %></span>
                 </div>
                 <div class="appointment-info">

@@ -92,6 +92,7 @@
     stmEmail.close();
     stm2.close();
     stmId.close();
- 
+    
+    response.sendRedirect("../index.html#appointment-page?submited=true");
 
 %>

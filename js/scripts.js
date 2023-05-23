@@ -7,78 +7,51 @@ const $errorToast = document.querySelector('.error-toast')
 const $appointmentPage = document.querySelector('#appointment-page')
 const $suggestionsContainer = document.querySelector('.suggestions')
 const $inputPhone = document.querySelector('input[name=telefone]')
-const $btnEnviar = document.querySelector('.btnEnviar')
+const $form = document.querySelector('.form')
+const $btnSubmit = document.querySelector('.btnEnviar')
 
+let isSubmited = window.location.href.split('?')[1]
+IsSubmited()
 
-let activeDate = ''
-
-$dateButton.forEach((date) => {   
-    date.childNodes[1].textContent = formatDate(date.childNodes[1].textContent)
-    date.addEventListener("click", (e) => {
-        activeDate = e.currentTarget.childNodes[1].textContent
-        localStorage.setItem("activeDate", activeDate)
-        window.location.replace("admin.jsp?date="+formatDateForQuery(activeDate));
-
-        activeDate = formatDate(activeDate)
-        toggleMenuDates()
-    })
-})
-
-window.onload = () => {
-    localStorage.key("activeDate")
-    $date.forEach((date) => {
-        if(date.textContent === localStorage.getItem("activeDate")){
-            date.parentNode.classList.add("active")
-        }
-    })
-}
-
-if($btnMenu !== null){
-    $btnMenu.addEventListener('click', () => {
-        toggleMenuDates()
-    })
-}
 
 document.querySelector('.form').addEventListener('focusin', () =>{
     phoneMask($inputPhone)
 })
 
-function verifyInputs(){
+function verifyInputs(event){
     $allInputs.forEach((input) => {
         if(input.value.length == 0){
             input.classList.add('error-form')
             showErrorToast("Todos os campos devem ser preenchidos!")
+            return event.preventDefault();
         }
         if(input.placeholder == 'E-mail'){
             if(input.value.indexOf('@') == -1){
                 input.classList.add('error-form')
                 showErrorToast("E-mail inválido!")
+                return event.preventDefault();
            }          
         }    
     })
 }
 
-function formatDate(date){
-    date = date.replaceAll("-", "")
-    let year = date.slice(0, 4)
-    let month = date.slice(4, 6)
-    let day = date.slice(6, 8)
-    return `${day}/${month}/${year}`
+$form.addEventListener('submit', (e) => {
+    verifyInputs(e)
+})
 
+function IsSubmited(){
+    if(isSubmited){
+        showSuccessToast("Formulário enviado!");
+    }
 }
 
-function formatDateForQuery(date){
-    date = date.replaceAll("/", "")
-    let year = date.slice(4, 8)
-    let month = date.slice(2, 4)
-    let day = date.slice(0, 2)
-    return `${year}-${month}-${day}`
-}
-
-function toggleMenuDates(){
-    !$menuDates.classList.contains('toggle') ?
-    $menuDates.classList.add('toggle') :
-    $menuDates.classList.remove('toggle')
+function showSuccessToast(message){
+    const $successToast = document.querySelector('.success')
+    document.querySelector('.success .message').textContent = message
+    $successToast.classList.add('show')
+    setTimeout(() => {
+        $successToast.classList.remove('show')
+    }, 3000)
 }
 
 function showErrorToast(message){
@@ -86,7 +59,7 @@ function showErrorToast(message){
     $errorToast.classList.add('show')
     setTimeout(() => {
         $errorToast.classList.remove('show')
-    }, 3000)
+    }, 5000)
 }
 
 function showSuggestions(){

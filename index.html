@@ -12,6 +12,13 @@
 <body>
     <div class="scroll-container">
         <div id="home">
+            <div class="toast success">
+                <i class="fa-sharp fa-solid fa-circle-check"></i>
+                <div class="message-container">
+                    <span class="message"></span>
+                    <span>Em breve iremos entrar em contato com você.</span>
+                </div>
+            </div>
             <section class="left-side">
                 <h2>Especialistas na</h2><br>
                 <h2>confecção de coquetéis</h2>
@@ -27,9 +34,9 @@
         </div>
     
         <div id="appointment-page">
-            <div class="error-toast">
+            <div class="toast error">
                 <i class="fa-sharp fa-solid fa-circle-exclamation"></i>
-                <div class="error-message">
+                <div class="message-container">
                     <span class="message"></span>
                 </div>
             </div>
@@ -48,7 +55,7 @@
                 <input type="time" id="horaEvento" name="horaEvento" class="input" placeholder="Horário do Evento">
                 </div>
                 <textarea type="text" name="pedido" class="input" placeholder="Sua solicitação e observações" id="pedido"></textarea>
-                <button class="btnEnviar" type="submit" onclick="verifyInputs()">Enviar</button>
+                <button class="btnEnviar" aria-invalid="true" type="submit">Enviar</button>
                 <button class="btnSugestoes" type="button" onclick="showSuggestions()">Ver Sugestões</button>
             </form>
             <div class="suggestions">
